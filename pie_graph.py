@@ -1,3 +1,4 @@
+
 import pandas as pd
 import matplotlib.pyplot as plt
 
@@ -5,15 +6,17 @@ import matplotlib.pyplot as plt
 def read_data():
     """
     Read Glassdoor jobs data with gender salaries from csv file
-    Extract Columns of job title, gender, and base pay
+    Extract Columns of job title, gender and base pay
     Group data by gender
+
     """
-    raw_data = pd.read_csv("Glassdoor Gender Pay Gap.csv")
+    read_data = pd.read_csv("Glassdoor Gender Pay Gap.csv")
     glassdoor_data = pd.DataFrame(
-        raw_data, columns=['JobTitle', 'Gender', 'BasePay'])
+        read_data, columns=['JobTitle', 'Gender', 'BasePay'])
     glassdoor_data['BasePay'] = glassdoor_data['BasePay']
 
-    # Group the data by gender
+
+# Group the data by gender
     female_data = glassdoor_data[glassdoor_data['Gender'] == 'Female']
     male_data = glassdoor_data[glassdoor_data['Gender'] == 'Male']
 
@@ -22,11 +25,12 @@ def read_data():
 
 def create_pie_chart(data, title, ax):
     """
-    Define color for each job category to show the same color
+    Define color for each job category to show same color
     for both male and female data
     plot a pie chart by grouping data with JobTitles and Basepay sum
+
     """
-    job_title_colors = {
+    job_colors = {
         'Graphic Designer': 'tab:blue',
         'Warehouse Associate': 'tab:orange',
         'Software Engineer': 'tab:green',
@@ -40,7 +44,7 @@ def create_pie_chart(data, title, ax):
     }
 
     job_titles = data['JobTitle'].unique()
-    colors = [job_title_colors.get(title, 'tab:gray') for title in job_titles]
+    colors = [job_colors.get(title, 'tab:gray') for title in job_titles]
 
     ax.pie(data.groupby('JobTitle')['BasePay'].sum(), startangle=140, colors=colors, textprops={
            'fontsize': 25}, labels=data['JobTitle'].unique(), autopct='%1.1f%%')
